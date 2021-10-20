@@ -2,21 +2,17 @@ package com.example.jpainheritance;
 
 import javax.persistence.Entity;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
-@NoArgsConstructor
+@SuperBuilder(toBuilder = true)
 @AllArgsConstructor
-@ToString
 @Getter
 @Setter
-@Builder(toBuilder = true)
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
+@ToString
 @Entity
-public class Profile extends Payload {
-  String profileName;
-}
+public class AccountsRecord extends Record<Accounts> {}

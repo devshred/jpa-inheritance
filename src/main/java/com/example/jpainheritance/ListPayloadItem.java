@@ -9,7 +9,5 @@ import lombok.Setter;
 @Setter
 @MappedSuperclass
 public abstract class ListPayloadItem extends Payload {
-
-    @JsonIgnore
-    private Long parentId;
+  @JsonIgnore private Long parentId;
 }

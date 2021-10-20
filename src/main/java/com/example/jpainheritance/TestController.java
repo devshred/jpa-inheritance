@@ -5,24 +5,37 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class TestController {
-    private final AccountsRepository accountsRepository;
-    private final ProfileRepository profileRepository;
+  private final AccountsRepository accountsRepository;
+  private final ProfileRepository profileRepository;
 
-    public TestController(
-            AccountsRepository accountsRepository, ProfileRepository profileRepository) {
-        this.accountsRepository = accountsRepository;
-        this.profileRepository = profileRepository;
-    }
+  public TestController(
+      AccountsRepository accountsRepository, ProfileRepository profileRepository) {
+    this.accountsRepository = accountsRepository;
+    this.profileRepository = profileRepository;
+  }
 
-    @GetMapping("/")
-    public String index() {
-        Account account = Account.builder().accountName("accountName").accountId("accountsId").build();
-        Accounts accounts = Accounts.builder().onlineId("account-onlineId").item("accountKey", account).build();
-        final Accounts save = accountsRepository.save(accounts);
+  @GetMapping("/")
+  public String createEntities() {
+    final Record<Accounts> accountsRecord =
+        accountsRepository.save(
+            AccountsRecord.builder()
+                .id("AccountsRecordId")
+                .state(
+                    RecordStatus.ON,
+                    Accounts.builder()
+                        .identifier("accounts-identifier")
+                        .item("accountKey", Account.builder().accountName("accountName").build())
+                        .build())
+                .build());
 
-        Profile profile = Profile.builder().profileName("myProfile").build();
-        final Profile profile1 = profileRepository.save(profile);
+    final ProfileRecord profileRecord =
+        profileRepository.save(
+            ProfileRecord.builder()
+                .id("ProfileRecordId")
+                .state(RecordStatus.OFF, Profile.builder().profileName("profileName").build())
+                .build());
 
-        return "accounts: " + save.getId() + " profile: " + profile1.getId();
-    }
+    return String.format(
+        "accountsId: %s, profileId: %s", accountsRecord.getId(), profileRecord.getId());
+  }
 }
