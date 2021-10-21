@@ -38,4 +38,14 @@ public class TestController {
     return String.format(
         "accountsId: %s, profileId: %s", accountsRecord.getId(), profileRecord.getId());
   }
+
+  @GetMapping("/find")
+  public String find(){
+    AccountsRecord accountsRecord = accountsRepository.findById("AccountsRecordId").orElseThrow(RuntimeException::new);
+    ProfileRecord profileRecord = profileRepository.findById("ProfileRecordId").orElseThrow(RuntimeException::new);
+    return String.format("account: %s, profile: %s",
+            accountsRecord.getStates().get(RecordStatus.ON).getIdentifier(),
+            profileRecord.getStates().get(RecordStatus.OFF).getProfileName()
+    );
+  }
 }

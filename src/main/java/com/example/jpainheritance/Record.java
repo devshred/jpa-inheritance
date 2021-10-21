@@ -3,13 +3,13 @@ package com.example.jpainheritance;
 import java.util.EnumMap;
 import java.util.Map;
 import javax.persistence.CascadeType;
-import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.JoinTable;
 import javax.persistence.MapKeyEnumerated;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -25,7 +25,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @EqualsAndHashCode
 @ToString
-@Entity
+@MappedSuperclass
 public class Record<P extends Payload> {
   @Id private String id;
 
