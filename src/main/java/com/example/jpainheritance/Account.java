@@ -1,23 +1,15 @@
 package com.example.jpainheritance;
 
 import javax.persistence.Entity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-@Getter
-@Setter
-@Builder(toBuilder = true)
-@EqualsAndHashCode(callSuper = false)
+@SuperBuilder(toBuilder = true)
 @Entity
-public class Account extends ListPayloadItem {
-  private Long accountsId;
+@Data
+public class Account extends Payload {
   private String accountName;
 }

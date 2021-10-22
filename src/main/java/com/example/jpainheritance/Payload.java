@@ -1,20 +1,15 @@
 package com.example.jpainheritance;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import javax.persistence.*;
+
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@MappedSuperclass
-@Getter
-@Setter
 @SuperBuilder(toBuilder = true)
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public abstract class Payload {
   @Id @GeneratedValue private Long id;
 }

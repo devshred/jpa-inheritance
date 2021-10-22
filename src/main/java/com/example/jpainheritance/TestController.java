@@ -5,28 +5,25 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class TestController {
-  private final AccountsRepository accountsRepository;
+  private final AccountRepository accountRepository;
   private final ProfileRepository profileRepository;
 
   public TestController(
-      AccountsRepository accountsRepository, ProfileRepository profileRepository) {
-    this.accountsRepository = accountsRepository;
+          AccountRepository accountRepository, ProfileRepository profileRepository) {
+    this.accountRepository = accountRepository;
     this.profileRepository = profileRepository;
   }
 
   @GetMapping("/")
   public String createEntities() {
-    final Record<Accounts> accountsRecord =
-        accountsRepository.save(
-            AccountsRecord.builder()
+    final AccountRecord accountsRecord =
+        accountRepository.save(
+            AccountRecord.builder()
                 .id("AccountsRecordId")
                 .state(
                     RecordStatus.ON,
-                    Accounts.builder()
-                        .identifier("accounts-identifier")
-                        .item("accountKey", Account.builder().accountName("accountName").build())
-                        .build())
-                .build());
+                    Account.builder().accountName("accountName").build())
+                        .build());
 
     final ProfileRecord profileRecord =
         profileRepository.save(
@@ -41,10 +38,10 @@ public class TestController {
 
   @GetMapping("/find")
   public String find(){
-    AccountsRecord accountsRecord = accountsRepository.findById("AccountsRecordId").orElseThrow(RuntimeException::new);
+    AccountRecord accountRecord = accountRepository.findById("AccountsRecordId").orElseThrow(RuntimeException::new);
     ProfileRecord profileRecord = profileRepository.findById("ProfileRecordId").orElseThrow(RuntimeException::new);
     return String.format("account: %s, profile: %s",
-            accountsRecord.getStates().get(RecordStatus.ON).getIdentifier(),
+            accountRecord.getStates().get(RecordStatus.ON).getAccountName(),
             profileRecord.getStates().get(RecordStatus.OFF).getProfileName()
     );
   }
